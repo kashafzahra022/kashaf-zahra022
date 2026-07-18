@@ -14,6 +14,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
 # Database Setup
 DB_NAME = 'research_vault.db'
@@ -94,9 +96,11 @@ def check_email_exists(email):
 
 # SMTP Email Sender for OTP Verification
 def send_otp_email(receiver_email, otp_code):
-    CENTRAL_SENDER = "zahrakashaf263@gmail.com"
-    # ⚠️ Replace with your 16-character App Password (Gmail App Passwords)
-    CENTRAL_PASSWORD = "idylfopyzqbbrayy" 
+    load_dotenv()
+    CENTRAL_SENDER = os.environ.get("SMTP_EMAIL")
+    CENTRAL_PASSWORD = os.environ.get("SMTP_PASSWORD")
+
+    message = MIMEMultipart()
     
     message = MIMEMultipart()
     message["From"] = f"Research Vault Security <{CENTRAL_SENDER}>"
